@@ -1,12 +1,14 @@
 package com.projects.noorullah.minions;
 
+
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +17,10 @@ public class WelcomeActivity extends MinionActiviy {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.welcome);
 
         TextView name = (TextView) findViewById(R.id.txt_welcome);
@@ -44,6 +49,19 @@ public class WelcomeActivity extends MinionActiviy {
 
             }
         });
+
+
+        Button skip = (Button) findViewById(R.id.skip_button);
+        skip.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+               Intent i = new Intent(WelcomeActivity.this,MenuActivity.class);
+                startActivity(i);
+                finish();
+                overridePendingTransition(0, 0);
+
+            }
+        });
     }
 
 
@@ -68,4 +86,5 @@ public class WelcomeActivity extends MinionActiviy {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

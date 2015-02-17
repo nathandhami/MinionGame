@@ -1,140 +1,163 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:gravity="center"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
-    android:background="@drawable/jaiselmer_yellow_marble">
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/jaiselmer_yellow_marble"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
 
 
     <TextView
+        android:id="@+id/txt_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/options"
-        android:id="@+id/txt_options"
-        android:textSize="42sp"
-        android:gravity="top|center"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:text="@string/options"
+        android:textSize="42sp"
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/txt_boardSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/boardSize"
-        android:id="@+id/txt_boardSize"
-        android:textSize="25sp"
-        android:layout_marginTop="63dp"
-        android:textColor="@android:color/black"
+
         android:layout_below="@+id/txt_options"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="false" />
+        android:layout_marginTop="40dp"
+        android:text="@string/boardSize"
+        android:textColor="@android:color/black"
+        android:textSize="25sp" />
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+
+    <!--android:text="@string/numOfMinions"-->
+    <!--android:id="@+id/textView"-->
+    <!--android:textSize="25sp"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_centerInParent="true"-->
+
+    <!--android:textColor="@android:color/black"-->
+    <!--/>-->
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_boardSize"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rd_size1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/size1"
+            android:textColor="@android:color/black" />
+
+        <RadioButton
+            android:id="@+id/rd_size2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/txt_boardSize"
+            android:checked="false"
+            android:text="@string/size2"
+            android:textColor="@android:color/black" />
+
+        <RadioButton
+            android:id="@+id/rd_size3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/size3"
+            android:textColor="@android:color/black" />
+    </RadioGroup>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/numOfMinions"
         android:id="@+id/textView"
-        android:textSize="25sp"
-        android:layout_marginTop="52dp"
-        android:layout_below="@+id/rd_size1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioGroup"
         android:layout_centerHorizontal="true"
-        android:textColor="@android:color/black" />
+        android:layout_marginTop="39dp"
+        android:text="@string/numOfMinions"
+        android:textColor="@android:color/black"
+        android:textSize="25sp" />
 
-    <RadioButton
+    <RadioGroup
+        android:id="@+id/radioGroup2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/size1"
-        android:id="@+id/rd_size1"
-        android:checked="true"
-        android:layout_alignTop="@+id/rd_size2"
-        android:layout_toLeftOf="@+id/txt_boardSize"
-        android:layout_toStartOf="@+id/txt_boardSize"
-        android:textColor="@android:color/black" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/size2"
-        android:id="@+id/rd_size2"
-        android:checked="false"
-        android:layout_marginTop="36dp"
-        android:layout_below="@+id/txt_boardSize"
-        android:layout_alignLeft="@+id/txt_boardSize"
-        android:layout_alignStart="@+id/txt_boardSize"
-        android:layout_marginLeft="33dp"
-        android:layout_marginStart="33dp"
-        android:textColor="@android:color/black" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/size3"
-        android:id="@+id/rd_size3"
-        android:checked="false"
-        android:layout_alignTop="@+id/rd_size2"
-        android:layout_toRightOf="@+id/txt_boardSize"
-        android:layout_toEndOf="@+id/txt_boardSize"
-        android:textColor="@android:color/black" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/num1"
-        android:id="@+id/rd_num1"
-        android:layout_marginTop="34dp"
-        android:checked="true"
+        android:layout_alignEnd="@+id/radioGroup"
+        android:layout_alignRight="@+id/radioGroup"
         android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/rd_size1"
-        android:layout_alignStart="@+id/rd_size1"
-        android:textColor="@android:color/black" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/num2"
-        android:id="@+id/rd_num2"
-        android:checked="false"
-        android:layout_alignTop="@+id/rd_num1"
-        android:layout_toRightOf="@+id/rd_size1"
-        android:layout_toEndOf="@+id/rd_size1"
-        android:textColor="@android:color/black" />
+        <RadioButton
+            android:id="@+id/rd_num1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/num1"
+            android:textColor="@android:color/black" />
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/num3"
-        android:id="@+id/rd_num3"
-        android:checked="false"
-        android:layout_alignTop="@+id/rd_num2"
-        android:layout_alignRight="@+id/txt_boardSize"
-        android:layout_alignEnd="@+id/txt_boardSize"
-        android:textColor="@android:color/black" />
+        <RadioButton
+            android:id="@+id/rd_num2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/num2"
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/num4"
-        android:id="@+id/rd_num4"
-        android:checked="false"
-        android:layout_alignTop="@+id/rd_num3"
-        android:layout_alignRight="@+id/rd_size3"
-        android:layout_alignEnd="@+id/rd_size3"
-        android:textColor="@android:color/black" />
+            android:textColor="@android:color/black" />
+
+
+        <RadioButton
+            android:id="@+id/rd_num3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/num3"
+            android:textColor="@android:color/black" />
+
+
+        <RadioButton
+            android:id="@+id/rd_num4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/num4"
+            android:textColor="@android:color/black" />
+
+    </RadioGroup>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/erase"
-        android:id="@+id/btn_erase"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/txt_options"
-        android:layout_alignStart="@+id/txt_options"
-        android:layout_toLeftOf="@+id/rd_num4"
-        android:layout_toStartOf="@+id/rd_num4" />
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/erase"
+    android:id="@+id/btn_erase"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true" />
+
+    <!--<SeekBar-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/seekBar"-->
+    <!--android:layout_below="@+id/radioGroup"-->
+    <!--android:layout_toLeftOf="@+id/txt_options"-->
+    <!--android:layout_toStartOf="@+id/txt_options"-->
+    <!--android:indeterminate="false" />-->
 
 </RelativeLayout>

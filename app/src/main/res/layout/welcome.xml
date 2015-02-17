@@ -15,9 +15,8 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="@color/yellow"
-        android:layout_above="@+id/img_wel"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="44dp" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,7 +35,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/img_wel"
         android:src="@drawable/minioniconlarge"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/welcome" />
+        android:contentDescription="@string/welcome"
+        android:layout_above="@+id/skip_button"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="@string/skip"
+        android:id="@+id/skip_button"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/img_wel"
+        android:layout_marginLeft="46dp"
+        android:layout_marginStart="46dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

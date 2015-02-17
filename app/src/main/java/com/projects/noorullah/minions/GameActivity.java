@@ -1,8 +1,11 @@
 package com.projects.noorullah.minions;
 
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.SharedPreferences;
+import android.widget.TextView;
 
 
 public class GameActivity extends MinionActiviy {
@@ -10,9 +13,26 @@ public class GameActivity extends MinionActiviy {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.game);
+
+
+        // Store Games played
+        SharedPreferences settings = getSharedPreferences(GAME_PREFERENCES,MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        int numOfGamesPlayed = settings.getInt("GAMES_PLAYED",0);
+        displayGamesPlayed(numOfGamesPlayed);
+        numOfGamesPlayed++;
+        editor.putInt("GAMES_PLAYED",numOfGamesPlayed);
+        editor.commit();
+
     }
 
+    private void displayGamesPlayed(int numOfPlayed) {
+        String displayNumOfPlayed = (String)getResources().getText(R.string.gamesplayed) + numOfPlayed;
+        TextView textview = (TextView) findViewById(R.id.textView2);
+        textview.setText(displayNumOfPlayed);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -5,12 +5,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 public class MinionActiviy extends ActionBarActivity {
+
+    public static final String GAME_PREFERENCES = "GamePref";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.welcome);
     }
 

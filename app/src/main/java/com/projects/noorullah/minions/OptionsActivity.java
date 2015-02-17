@@ -1,8 +1,12 @@
 package com.projects.noorullah.minions;
 
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class OptionsActivity extends MinionActiviy {
@@ -10,7 +14,19 @@ public class OptionsActivity extends MinionActiviy {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.options);
+
+        Button reset = (Button) findViewById(R.id.btn_erase);
+        reset.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                SharedPreferences settings = getSharedPreferences(GAME_PREFERENCES,MODE_PRIVATE);
+                SharedPreferences.Editor prefEditor = settings.edit();
+                prefEditor.putInt("GAMES_PLAYED",0);
+                prefEditor.commit();
+            }
+        });
     }
 
 

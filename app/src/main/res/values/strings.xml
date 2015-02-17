@@ -22,6 +22,8 @@
     <string name="num3">15</string>
     <string name="num4">20</string>
     <string name="erase">Erase times played</string>
+    <string name="skip">Skip</string>
+    <string name="gamesplayed">Games played: </string>
 
     //welcome screen
     <string name="by">By: Noor and Nate</string>

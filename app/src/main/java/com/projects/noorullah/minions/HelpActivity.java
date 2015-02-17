@@ -10,6 +10,7 @@ public class HelpActivity extends MinionActiviy {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.help);
     }
 
