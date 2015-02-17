@@ -5,11 +5,26 @@
     <string name="action_settings">Settings</string>
     <string name="help">Help</string>
     <string name="menu">Main Menu</string>
-    <string name="welcome">Welcome</string>
+    <string name="welcome">Minions</string>
     <string name="options">Options</string>
     <string name="game">Game</string>
 
     <string name="play">Play Game</string>
+
+    //options screen
+    <string name="boardSize">Board Size: </string>
+    <string name="numOfMinions">No. of minions: </string>
+    <string name="size1">3 * 4</string>
+    <string name="size2">4 * 6</string>
+    <string name="size3">8 * 12</string>
+    <string name="num1">6</string>
+    <string name="num2">10</string>
+    <string name="num3">15</string>
+    <string name="num4">20</string>
+    <string name="erase">Erase times played</string>
+
+    //welcome screen
+    <string name="by">By: Noor and Nate</string>
 
 
 </resources>

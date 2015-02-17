@@ -1,8 +1,11 @@
 package com.projects.noorullah.minions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class MenuActivity extends MinionActiviy {
@@ -11,6 +14,28 @@ public class MenuActivity extends MinionActiviy {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+
+        Button playGame = (Button) findViewById(R.id.btn_game);
+        playGame.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),GameActivity.class));
+            }
+        });
+        Button options = (Button) findViewById(R.id.btn_options);
+        options.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),OptionsActivity.class));
+            }
+        });
+        Button help = (Button) findViewById(R.id.btn_help);
+        help.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),HelpActivity.class));
+            }
+        });
     }
 
 
