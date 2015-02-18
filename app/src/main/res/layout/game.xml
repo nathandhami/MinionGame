@@ -23,9 +23,20 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/gamesplayed"
-        android:id="@+id/textView2"
+        android:id="@+id/txt_played"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/txt_game"
         android:layout_alignStart="@+id/txt_game" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/minionsRemain"
+        android:id="@+id/txt_remain"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
+
+

@@ -5,16 +5,65 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
+
 import android.widget.TextView;
 
 
 public class GameActivity extends MinionActiviy {
+
+    private int row;
+    private int col;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.game);
+
+        SharedPreferences optionStorage = getSharedPreferences(GAME_PREFERENCES,MODE_PRIVATE);
+
+        int boardOption;
+        int minionsOption;
+        int numOfMinionsLeft = 0;
+
+        boardOption = optionStorage.getInt(RADIO_GROUP_KEY1,0);
+        minionsOption= optionStorage.getInt(RADIO_GROUP_KEY2,0);
+
+        if(boardOption == 0){
+            row = 3;
+            col = 4;
+        }
+
+        else if(boardOption ==1){
+            row = 4;
+            col = 6;
+        }
+        else if(boardOption ==2){
+            row =8;
+            col = 12;
+        }
+
+        if(minionsOption ==0 ){
+            numOfMinionsLeft = 6;
+        }
+        else if(minionsOption==1){
+            numOfMinionsLeft = 10;
+        }
+        else if(minionsOption==2){
+            numOfMinionsLeft =15;
+
+        }
+        else if(minionsOption == 3){
+            numOfMinionsLeft = 20;
+        }
+
+        String minionRemaining = (String)getResources().getText(R.string.minionsRemain) + " " + numOfMinionsLeft;
+        TextView textview = (TextView) findViewById(R.id.txt_remain);
+        textview.setText(minionRemaining);
+
+
+        // Dynamically allocate grid buttons here
+
 
 
         // Store Games played
@@ -26,11 +75,14 @@ public class GameActivity extends MinionActiviy {
         editor.putInt("GAMES_PLAYED",numOfGamesPlayed);
         editor.commit();
 
+
+
+
     }
 
     private void displayGamesPlayed(int numOfPlayed) {
         String displayNumOfPlayed = (String)getResources().getText(R.string.gamesplayed) + numOfPlayed;
-        TextView textview = (TextView) findViewById(R.id.textView2);
+        TextView textview = (TextView) findViewById(R.id.txt_played);
         textview.setText(displayNumOfPlayed);
     }
 

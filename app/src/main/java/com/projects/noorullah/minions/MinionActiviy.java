@@ -8,6 +8,8 @@ import android.view.MenuItem;
 public class MinionActiviy extends ActionBarActivity {
 
     public static final String GAME_PREFERENCES = "GamePref";
+    public static final String RADIO_GROUP_KEY1 = "RADIO_BUTTON1_INDEX";
+    public static final String RADIO_GROUP_KEY2 = "RADIO_BUTTON2_INDEX";
 
 
     @Override

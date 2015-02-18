@@ -24,6 +24,7 @@
     <string name="erase">Erase times played</string>
     <string name="skip">Skip</string>
     <string name="gamesplayed">Games played: </string>
+    <string name="minionsRemain">Minions Remaining </string>
 
     //welcome screen
     <string name="by">By: Noor and Nate</string>
