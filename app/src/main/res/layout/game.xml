@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -7,16 +8,16 @@
     android:id="@+id/layout"
     android:background="@drawable/jaiselmer_yellow_marble">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/game"
-        android:id="@+id/txt_game"
-        android:textSize="42sp"
-        android:gravity="center"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/game"-->
+        <!--android:id="@+id/txt_game"-->
+        <!--android:textSize="42sp"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:textStyle="bold" />-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,6 +38,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-</RelativeLayout>
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/txt_remain"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="0dp"
+            android:stretchColumns="*"
+            android:layout_above="@+id/txt_played"
+            android:id="@+id/tableForButtons"></TableLayout>
+
+    </RelativeLayout>
 
 

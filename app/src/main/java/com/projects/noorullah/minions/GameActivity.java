@@ -6,6 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.content.SharedPreferences;
 
+import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 
@@ -63,7 +66,7 @@ public class GameActivity extends MinionActiviy {
 
 
         // Dynamically allocate grid buttons here
-
+        populateButtons();
 
 
         // Store Games played
@@ -84,6 +87,30 @@ public class GameActivity extends MinionActiviy {
         String displayNumOfPlayed = (String)getResources().getText(R.string.gamesplayed) + numOfPlayed;
         TextView textview = (TextView) findViewById(R.id.txt_played);
         textview.setText(displayNumOfPlayed);
+    }
+
+    private void populateButtons(){
+
+        TableLayout table  = (TableLayout) findViewById(R.id.tableForButtons);
+
+        for(int i =0; i < row; i++){
+        TableRow tableRow = new TableRow(this);
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(
+                    TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.MATCH_PARENT,
+                    1.0f
+            ));
+            table.addView((tableRow));
+            for(int j =0; j < col; j++){
+                Button button = new Button(this);
+                button.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        1.0f));
+                tableRow.addView(button);
+
+            }
+        }
     }
 
     @Override
