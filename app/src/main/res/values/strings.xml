@@ -25,6 +25,7 @@
     <string name="skip">Skip</string>
     <string name="gamesplayed">Games played: </string>
     <string name="minionsRemain">Minions Remaining </string>
+    <string name="movesMade">Moves Made: </string>
 
     //welcome screen
     <string name="by">By: Noor and Nate</string>

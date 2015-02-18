@@ -49,6 +49,16 @@
             android:layout_above="@+id/txt_played"
             android:id="@+id/tableForButtons"></TableLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/movesMade"
+            android:id="@+id/txt_moves"
+            android:layout_below="@+id/tableForButtons"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
 
 
