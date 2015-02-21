@@ -14,8 +14,6 @@ import android.widget.RadioGroup;
 
 public class OptionsActivity extends MinionActiviy {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +58,9 @@ public class OptionsActivity extends MinionActiviy {
                 SharedPreferences settings = getSharedPreferences(GAME_PREFERENCES,MODE_PRIVATE);
                 SharedPreferences.Editor prefEditor = settings.edit();
 
-
                 RadioButton checkedItem = (RadioButton)radiogroup.findViewById(checkedId);
 
                 int checkedRadioButtonIndex = radiogroup.indexOfChild(checkedItem);
-
 
                 prefEditor.putInt(RADIO_GROUP_KEY2,checkedRadioButtonIndex);
                 prefEditor.commit();

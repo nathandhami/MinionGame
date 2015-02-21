@@ -19,12 +19,15 @@ import android.widget.TextView;
 
 public class GameActivity extends MinionActiviy {
 
-    private int row;
-    private int col;
+
+    private GameLogic  defaultGame;
+    private int NUM_OF_ROWS;
+    private int NUM_OF_COLS;
+    private int numOfMinionsLeft;
     private Button buttons[][];
     private Button user;
     private int userMoves = 0;
-
+//    private boolean occupied[][];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,62 +35,30 @@ public class GameActivity extends MinionActiviy {
 
         setContentView(R.layout.game);
 
-        SharedPreferences optionStorage = getSharedPreferences(GAME_PREFERENCES,MODE_PRIVATE);
+        defaultGame = new GameLogic(getApplicationContext());
 
-        int boardOption;
-        int minionsOption;
-        int numOfMinionsLeft = 0;
-
-        boardOption = optionStorage.getInt(RADIO_GROUP_KEY1,0);
-        minionsOption= optionStorage.getInt(RADIO_GROUP_KEY2,0);
-
-        if(boardOption == 0){
-            row = 3;
-            col = 4;
-        }
-
-        else if(boardOption ==1){
-            row = 4;
-            col = 6;
-        }
-        else if(boardOption ==2){
-            row =8;
-            col = 12;
-        }
-
+        NUM_OF_ROWS = defaultGame.getRowGameBoard();
+        NUM_OF_COLS = defaultGame.getColGameBoard();
+        numOfMinionsLeft = defaultGame.getMinions();
+//
         // array of buttons
-        buttons = new Button[row][col];
-
-
-
-        if(minionsOption ==0 ){
-            numOfMinionsLeft = 6;
-        }
-        else if(minionsOption==1){
-            numOfMinionsLeft = 10;
-        }
-        else if(minionsOption==2){
-            numOfMinionsLeft =15;
-
-        }
-        else if(minionsOption == 3){
-            numOfMinionsLeft = 20;
-        }
-
+        buttons = new Button[NUM_OF_ROWS][NUM_OF_COLS];
+//
         String minionRemaining = (String)getResources().getText(R.string.minionsRemain) + " " + numOfMinionsLeft;
         TextView textview = (TextView) findViewById(R.id.txt_remain);
         textview.setText(minionRemaining);
-
-
-        // Dynamically allocate grid buttons here
+//
+//
+//        // Dynamically allocate grid buttons here
         populateButtons();
-
-        // Setup
+//
+//        // Setup User and Minions
             lockButtons();
             generateImageForMinionButton(0, 2);
             generateImageForUserButton(0,0);
-
-        // Store Games played
+//
+//
+//        // Store Games played
         SharedPreferences settings = getSharedPreferences(GAME_PREFERENCES,MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         int numOfGamesPlayed = settings.getInt("GAMES_PLAYED",0);
@@ -102,12 +73,12 @@ public class GameActivity extends MinionActiviy {
         TextView textview = (TextView) findViewById(R.id.txt_played);
         textview.setText(displayNumOfPlayed);
     }
-
+//
     private void populateButtons(){
 
         TableLayout table  = (TableLayout) findViewById(R.id.tableForButtons);
 
-        for(int i =0; i < row; i++){
+        for(int i =0; i < NUM_OF_ROWS; i++){
         TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
@@ -115,9 +86,9 @@ public class GameActivity extends MinionActiviy {
                     1.0f
             ));
             table.addView((tableRow));
-            for(int j =0; j < col; j++){
-                 final int x = i;
-                final int y = j;
+            for(int j =0; j < NUM_OF_COLS; j++){
+//                 final int x = i;
+//                final int y = j;
                 Button button = new Button(this);
 
                 button.setLayoutParams(new TableRow.LayoutParams(
@@ -142,37 +113,31 @@ public class GameActivity extends MinionActiviy {
             }
         }
     }
-
-
+//
+//
     private void generateImageForMinionButton(int x, int y){
         Button button  = buttons[x][y];
-        int newHeight = button.getHeight();
-        int newWidth= button.getWidth();
-
-        Log.i("MinionGame","Height :" + newHeight);
-        Log.i("MinionGame","Width:" + newWidth);
+        int newHeight = 98;
+        int newWidth= 142;
         Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.greenmonster);
-        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, 142, 98, true);
+        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
         Resources resource = getResources();
         button.setBackground(new BitmapDrawable(resource,scaledBitMap));
     }
-
+//
     private void generateImageForUserButton(int x, int y){
         Button button  = buttons[x][y];
-        int newHeight = button.getHeight();
-        int newWidth= button.getWidth();
-
-        Log.i("MinionGame","Height :" + newHeight);
-        Log.i("MinionGame","Width:" + newWidth);
+        int newHeight = 98;
+        int newWidth= 142;
         Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.stickman);
-        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, 142, 98, true);
+        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
         Resources resource = getResources();
         button.setBackground(new BitmapDrawable(resource,scaledBitMap));
     }
-
+//
     private void lockButtons() {
-        for(int i =0; i < row; i++){
-            for(int j =0; j < col; j++){
+        for(int i =0; i < NUM_OF_ROWS; i++){
+            for(int j =0; j < NUM_OF_COLS; j++){
                 Button button = buttons[i][j];
                 int width= button.getWidth();
                 button.setMinWidth(width);
@@ -180,7 +145,6 @@ public class GameActivity extends MinionActiviy {
                 int height= button.getHeight();
                 button.setMinHeight(height);
                 button.setMaxHeight(height);
-
             }
         }
     }
