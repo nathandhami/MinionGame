@@ -114,26 +114,56 @@ public class Cell extends MinionActiviy{
     public void moveMinion(Minion minion){
         int minionX = minion.getMinionXCoordinate();
         int minionY = minion.getMinionYCoordinate();
-        if(playerX-minionX>1){
-            minionX++;
-        }
-        else if (playerX - minionX < 0){
-            minionX--;
-        }
-        else{
-            if(playerY-minionY>1){
-                minionY++;
+
+
+            if(playerX - minionX == 1){
+                minionX = playerX;
             }
-            else if (playerY - minionY < 0){
-                minionY--;
+            else if(playerX-minionX>1){
+                minionX++;
             }
+            else if (playerX - minionX < 0){
+                minionX--;
+            }
+
             else{
-                //GAME OVER
+                if(playerY - minionY == 1){
+                    minionY = playerY;
+                }
+                if(playerY-minionY>1){
+                    minionY++;
+                }
+                else if (playerY - minionY < 0){
+                    minionY--;
+                }
+                
+                else{
+                    //GAME OVER
+                }
             }
-        }
+
 
         minion.updateLocation(minionX,minionY);
+        map[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()] = -1;
+        map[minionX][minionY] = 0;
 
+    }
+
+    public void killingMinions(Minion first, Minion second){
+
+        int firstX = first.getMinionXCoordinate();
+        int firstY = first.getMinionYCoordinate();
+
+        int secondX = second.getMinionXCoordinate();
+        int secondY = second.getMinionYCoordinate();
+
+        if(firstX == secondX && firstY == secondY){
+            first.ImmobilizeMinions(firstX,firstY);
+            map[firstX][firstY] = -1;
+
+            second.ImmobilizeMinions(secondX,secondY);
+            map[firstX][firstY] = -1;
+        }
     }
 
     public boolean minionExists(int x, int y){

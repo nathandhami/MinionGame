@@ -205,7 +205,25 @@ public class GameActivity extends MinionActiviy {
         for(int i=0; i < numOfMinionsLeft; i++) {
             generateImageForDefaultButton(minions[i].getMinionXCoordinate(), minions[i].getMinionYCoordinate());
             mapTracker.moveMinion(minions[i]);
-            generateImageForMinionButton(minions[i]);
+            generateImageForMinionButton(minions[i],mapTracker.getMap());
+        }
+
+        for(int i=0; i < numOfMinionsLeft-1; i++){
+
+            for(int j=i+1; j<numOfMinionsLeft; j++){
+
+                if(minions[i].getMinionXCoordinate() == minions[j].getMinionXCoordinate()){
+                    if(minions[i].getMinionYCoordinate() == minions[j].getMinionYCoordinate()){
+                        mapTracker.killingMinions(minions[i],minions[j]);
+                        Toast.makeText(this,"Minions Immobilised!", Toast.LENGTH_SHORT).show();
+                        generateImageForDefaultButton(minions[i].getMinionXCoordinate(),minions[i].getMinionYCoordinate());
+                        //deleteMinion(i);
+                        //deleteMinion(j);
+
+
+                    }
+                }
+            }
         }
 
     }
@@ -238,16 +256,33 @@ public class GameActivity extends MinionActiviy {
 
     }
 
-    private void generateImageForMinionButton(Minion minion){
-        Button button = buttons[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()];
-        int newHeight = 98;
-        int newWidth = 142;
-        Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.greenmonster);
-        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
-        Resources resource = getResources();
-        button.setBackground(new BitmapDrawable(resource, scaledBitMap));
+    private void generateImageForMinionButton(Minion minion, int map[][]){
+        if(map[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()] == 0){
+            Button button = buttons[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()];
+            int newHeight = 98;
+            int newWidth = 142;
+            Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.greenmonster);
+            Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
+            Resources resource = getResources();
+            button.setBackground(new BitmapDrawable(resource, scaledBitMap));
+        }
+
 
     }
+
+    /*public void deleteMinion(int del){
+
+        for(int i=0; i<numOfMinionsLeft; i++){
+
+            if(i == del){
+                for(int j=i; j<numOfMinionsLeft - 1; j++){
+                    minions[j] = minions[j+1];
+                }
+                numOfMinionsLeft--;
+                break;
+            }
+        }
+    }*/
 //
     private void generateImageForUserButton(int map[][]){
 

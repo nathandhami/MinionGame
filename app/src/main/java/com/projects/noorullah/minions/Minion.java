@@ -66,4 +66,10 @@ public class Minion {
         this.y = y;
     }
 
+    public void ImmobilizeMinions(int x, int y){
+
+        location[x][y] = -1;
+
+    }
+
 }
