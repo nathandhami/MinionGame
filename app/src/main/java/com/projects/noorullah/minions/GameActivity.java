@@ -32,10 +32,6 @@ public class GameActivity extends MinionActiviy {
     private Button buttons[][];
     private Button user;
     Drawable defaultBackground;
-    int UP = 2;
-    int DOWN = 0;
-    int RIGHT = 1;
-    int LEFT = 3;
     private int userMoves = 0;
 //    private boolean occupied[][];
 
@@ -188,7 +184,7 @@ public class GameActivity extends MinionActiviy {
                 dialog.setContentView(tv);
                 dialog.show();
             }
-            Toast.makeText(this,"GO UP --Minion coordinate:  " + minions[0].getMinionXCoordinate() +"," + minions[0].getMinionYCoordinate(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"GO UP --Minion coordinate:  " + minions[3].getMinionXCoordinate() +"," + minions[3].getMinionYCoordinate(), Toast.LENGTH_SHORT).show();
             generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
             mapTracker.assignUser(x,y);
             generateImageForUserButton(mapTracker.getMap());
@@ -198,7 +194,7 @@ public class GameActivity extends MinionActiviy {
             if(mapTracker.minionExists(x,y)){
                 Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
             }
-            Toast.makeText(this,"GO DOWN", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"GO DOWN -- Minion coordinate: " + minions[2].getMinionXCoordinate() +"," + minions[2].getMinionYCoordinate() , Toast.LENGTH_SHORT).show();
             generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
             mapTracker.assignUser(x,y);
             generateImageForUserButton(mapTracker.getMap());

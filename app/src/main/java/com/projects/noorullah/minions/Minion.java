@@ -5,22 +5,30 @@ package com.projects.noorullah.minions;
  */
 public class Minion {
 
-    int location[][];
-    int numOfRows;
-    int numOfColumns;
-    int x;
-    int y;
+    private int location[][];
+    private int numOfRows;
+    private int numOfColumns;
+    private int x;
+    private int y;
 
     public Minion(Cell mapTracker){
-
          numOfRows = mapTracker.getNumOfRows();
          numOfColumns = mapTracker.getNumOfColumns();
-        location = new int[numOfRows][numOfColumns];
+         location = new int[numOfRows][numOfColumns];
+
+        for(int i=0; i < numOfRows;i++){
+            for(int j=0; j< numOfColumns;j++){
+                location[i][j] = -1;
+            }
+        }
+
+
     }
 
     public int[][] getLocation(){
         return location;
     }
+
 
     public void getCoordinates(){
         for(int i=0; i < numOfRows;i++){

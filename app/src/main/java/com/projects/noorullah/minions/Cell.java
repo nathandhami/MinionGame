@@ -73,6 +73,11 @@ public class Cell extends MinionActiviy{
         return playerY;
     }
 
+    public void moveMinion(Minion minion){
+
+
+    }
+
     public void assignUserRandomly(){
         Random generate = new Random();
         int startRow = generate.nextInt(NUM_OF_ROWS);
@@ -104,7 +109,6 @@ public class Cell extends MinionActiviy{
 
         map[startRow][startCol] = 0;// 0 for minion // 1 for user // -1 unocupied
         location[startRow][startCol] = 0;
-
 
     }
 
