@@ -3,6 +3,7 @@ package com.projects.noorullah.minions;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 
 public class HelpActivity extends MinionActiviy {
@@ -35,5 +36,15 @@ public class HelpActivity extends MinionActiviy {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        if(MotionEvent.ACTION_DOWN == 0){
+            finish();
+            return true;
+        }
+        return false;
     }
 }

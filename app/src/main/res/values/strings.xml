@@ -26,6 +26,13 @@
     <string name="gamesplayed">Games played: </string>
     <string name="minionsRemain">Minions Remaining </string>
     <string name="movesMade">Moves Made: </string>
+    <string name="howto">How To: \nSelect board size and the amount of minions you want to face in
+     the options menu. To play the game, you have to get away from the minions
+     by touching cells adjacent to yourself(stickman). If minions go into the same cell
+    then it will kill both of them. Continue evading minions until your the last man
+    standing! Or get killed by a minion occupying the same cell as you.</string>
+    <string name="website">http://www.cs.sfu.ca/~wsumner/teaching/276/15/</string>
+
 
     //welcome screen
     <string name="by">By: Noor and Nate</string>
