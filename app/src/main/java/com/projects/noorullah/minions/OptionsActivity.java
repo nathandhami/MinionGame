@@ -1,6 +1,7 @@
 package com.projects.noorullah.minions;
 
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
+import android.widget.TextView;
 
 
 public class OptionsActivity extends MinionActiviy {
@@ -40,6 +41,7 @@ public class OptionsActivity extends MinionActiviy {
                 int checkedRadioButtonIndex = radioGroupGameBoard.indexOfChild(checkedItem);
 
 
+
                 prefEditor.putInt(RADIO_GROUP_KEY1,checkedRadioButtonIndex);
                 prefEditor.commit();
 
@@ -62,8 +64,19 @@ public class OptionsActivity extends MinionActiviy {
 
                 int checkedRadioButtonIndex = radiogroup.indexOfChild(checkedItem);
 
-                prefEditor.putInt(RADIO_GROUP_KEY2,checkedRadioButtonIndex);
-                prefEditor.commit();
+                if(settings.getInt(RADIO_GROUP_KEY1,0) == 0 && checkedRadioButtonIndex >= 2){
+                    Dialog dialog = new Dialog(OptionsActivity.this);
+                    dialog.setTitle("ERROR IN CONFIGURATION");
+                    TextView tv = new TextView(OptionsActivity.this);
+                    tv.setText("Select valid options");
+                    dialog.setContentView(tv);
+                    dialog.show();
+                }
+                else{
+                    prefEditor.putInt(RADIO_GROUP_KEY2,checkedRadioButtonIndex);
+                    prefEditor.commit();
+                }
+
 
             }
         });
