@@ -6,11 +6,15 @@ package com.projects.noorullah.minions;
 public class Minion {
 
     int location[][];
+    int numOfRows;
+    int numOfColumns;
+    int x;
+    int y;
 
     public Minion(Cell mapTracker){
 
-        int numOfRows = mapTracker.getNumOfRows();
-        int numOfColumns = mapTracker.getNumOfColumns();
+         numOfRows = mapTracker.getNumOfRows();
+         numOfColumns = mapTracker.getNumOfColumns();
         location = new int[numOfRows][numOfColumns];
     }
 
@@ -18,6 +22,24 @@ public class Minion {
         return location;
     }
 
+    public void getCoordinates(){
+        for(int i=0; i < numOfRows;i++){
+            for(int j =0; j< numOfColumns;j++){
+                if(location[i][j] == 0){
+                    x = i;
+                    y = j;
+                }
+            }
+        }
+    }
+
+    public int getMinionXCoordinate(){
+        return x;
+    }
+
+    public int getMinionYCoordinate(){
+        return y;
+    }
     // 0 for minion
     // 1 for user
     // -1 for unoccupied

@@ -15,6 +15,8 @@ public class Player {
 
     }
 
+
+
     public int [][] getLocation(){
         return location;
     }

@@ -65,13 +65,6 @@ public class Cell extends MinionActiviy{
         }
     }
 
-    public void moveUser(int location[][],int x,int y){
-
-        location[playerX][playerY] = -1;
-        location[playerX+1][playerY] = 1;
-
-    }
-
     public int getUserX(){
         return playerX;
     }
@@ -80,14 +73,19 @@ public class Cell extends MinionActiviy{
         return playerY;
     }
 
-    public void assignDefault(int location[][],int x,int y){
-        map[x][y] = -1;
-    }
-
-    public void assignUser(int location[][]){
+    public void assignUserRandomly(){
         Random generate = new Random();
         int startRow = generate.nextInt(NUM_OF_ROWS);
         int startCol = generate.nextInt(NUM_OF_COLS);
+        playerX = startRow;
+        playerY = startCol;
+        map[startRow][startCol] = 1;
+    }
+    public void assignUser(int x,int y){
+        // last
+        map[playerX][playerY] = -1;
+        int startRow = x;
+        int startCol = y;
         playerX = startRow;
         playerY = startCol;
         map[startRow][startCol] = 1;
@@ -105,8 +103,16 @@ public class Cell extends MinionActiviy{
         }
 
         map[startRow][startCol] = 0;// 0 for minion // 1 for user // -1 unocupied
+        location[startRow][startCol] = 0;
 
 
+    }
+
+    public boolean minionExists(int x, int y){
+        if(map[x][y] == 0){
+            return true;
+        }
+        return false;
     }
 
     public boolean playerExists(int x, int y){

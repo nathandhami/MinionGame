@@ -1,10 +1,12 @@
 package com.projects.noorullah.minions;
 
 
+import android.app.Dialog;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,10 +26,12 @@ public class GameActivity extends MinionActiviy {
     private Cell mapTracker;
     Player player;
     private int NUM_OF_ROWS;
+    Minion minions[];
     private int NUM_OF_COLS;
     private int numOfMinionsLeft;
     private Button buttons[][];
     private Button user;
+    Drawable defaultBackground;
     int UP = 2;
     int DOWN = 0;
     int RIGHT = 1;
@@ -41,14 +45,12 @@ public class GameActivity extends MinionActiviy {
 
         setContentView(R.layout.game);
 
+
         mapTracker = new Cell(getApplicationContext());
 
         NUM_OF_ROWS = mapTracker.getNumOfRows();
         NUM_OF_COLS = mapTracker.getNumOfColumns();
         numOfMinionsLeft = mapTracker.getMinions();
-
-
-
 
         //
         // array of buttons
@@ -64,13 +66,15 @@ public class GameActivity extends MinionActiviy {
 //
 //        // Setup User and Minions
             lockButtons();
-        Minion minions[] = new Minion[numOfMinionsLeft];
+         minions = new Minion[numOfMinionsLeft];
 
             player = new Player(mapTracker);
-            mapTracker.assignUser(player.getLocation());
+            mapTracker.assignUserRandomly();
         for(int i=0; i < numOfMinionsLeft;i++){
             minions[i] = new Minion(mapTracker);
             mapTracker.assignMinions(minions[i].getLocation());
+            minions[i].getCoordinates();
+
         }
 
              generateImageForUserButton(mapTracker.getMap());
@@ -110,6 +114,7 @@ public class GameActivity extends MinionActiviy {
                 final int y = j;
                 Button button = new Button(this);
 
+
                 button.setLayoutParams(new TableRow.LayoutParams(
                         TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.MATCH_PARENT,
@@ -132,6 +137,8 @@ public class GameActivity extends MinionActiviy {
                 });
                 tableRow.addView(button);
                 buttons[i][j] = button;
+                defaultBackground = button.getBackground();
+
 
             }
         }
@@ -149,20 +156,68 @@ public class GameActivity extends MinionActiviy {
         boolean goUp  = x == (mapTracker.getUserX() - 1) && y == mapTracker.getUserY();
         boolean goDown  = x == (mapTracker.getUserX() + 1) && y == mapTracker.getUserY();
 
+
         if(goLeft){
-            Toast.makeText(this,"GO LEFT", Toast.LENGTH_SHORT).show();
+            if(mapTracker.minionExists(x,y)){
+                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
+            }
+            Toast.makeText(this,"GO LEFT" +  defaultBackground.toString(), Toast.LENGTH_SHORT).show();
+            generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
+            mapTracker.assignUser(x,y);
+            generateImageForUserButton(mapTracker.getMap());
         }
         else if(goRight){
+            if(mapTracker.minionExists(x,y)){
+                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
+            }
             Toast.makeText(this,"GO RIGHT", Toast.LENGTH_SHORT).show();
+            generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
+            mapTracker.assignUser(x,y);
+            generateImageForUserButton(mapTracker.getMap());
+
+//            generateImageForDefaultButton(x,y);
+//            button.setBackground(defaultBackground);
         }
         else if(goUp){
-            Toast.makeText(this,"GO UP", Toast.LENGTH_SHORT).show();
+            if(mapTracker.minionExists(x,y)){
+                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(this);
+                dialog.setTitle("GAME OVER");
+                TextView tv = new TextView(this);
+                tv.setText("You lost!");
+                dialog.setContentView(tv);
+                dialog.show();
+            }
+            Toast.makeText(this,"GO UP --Minion coordinate:  " + minions[0].getMinionXCoordinate() +"," + minions[0].getMinionYCoordinate(), Toast.LENGTH_SHORT).show();
+            generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
+            mapTracker.assignUser(x,y);
+            generateImageForUserButton(mapTracker.getMap());
+//            button.setBackground(defaultBackground);
         }
         else if(goDown){
+            if(mapTracker.minionExists(x,y)){
+                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
+            }
             Toast.makeText(this,"GO DOWN", Toast.LENGTH_SHORT).show();
+            generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
+            mapTracker.assignUser(x,y);
+            generateImageForUserButton(mapTracker.getMap());
+//            button.setBackground(defaultBackground);
         }
 
 
+
+
+    }
+
+    private void generateImageForDefaultButton(int x, int y){
+        Button button = buttons[x][y];
+        int newHeight = 98;
+        int newWidth = 142;
+        Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.btn_default_normal);
+        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
+        Resources resource = getResources();
+        button.setBackground(new BitmapDrawable(resource, scaledBitMap));
     }
 
     private void generateImageForMinionButton(int map[][]){
