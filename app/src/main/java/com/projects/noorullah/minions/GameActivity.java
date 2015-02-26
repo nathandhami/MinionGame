@@ -15,17 +15,23 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class GameActivity extends MinionActiviy {
 
 
-    private GameLogic  defaultGame;
+    private Cell mapTracker;
+    Player player;
     private int NUM_OF_ROWS;
     private int NUM_OF_COLS;
     private int numOfMinionsLeft;
     private Button buttons[][];
     private Button user;
+    int UP = 2;
+    int DOWN = 0;
+    int RIGHT = 1;
+    int LEFT = 3;
     private int userMoves = 0;
 //    private boolean occupied[][];
 
@@ -35,27 +41,40 @@ public class GameActivity extends MinionActiviy {
 
         setContentView(R.layout.game);
 
-        defaultGame = new GameLogic(getApplicationContext());
+        mapTracker = new Cell(getApplicationContext());
 
-        NUM_OF_ROWS = defaultGame.getRowGameBoard();
-        NUM_OF_COLS = defaultGame.getColGameBoard();
-        numOfMinionsLeft = defaultGame.getMinions();
-//
+        NUM_OF_ROWS = mapTracker.getNumOfRows();
+        NUM_OF_COLS = mapTracker.getNumOfColumns();
+        numOfMinionsLeft = mapTracker.getMinions();
+
+
+
+
+        //
         // array of buttons
         buttons = new Button[NUM_OF_ROWS][NUM_OF_COLS];
-//
+        //
         String minionRemaining = (String)getResources().getText(R.string.minionsRemain) + " " + numOfMinionsLeft;
         TextView textview = (TextView) findViewById(R.id.txt_remain);
         textview.setText(minionRemaining);
 //
 //
 //        // Dynamically allocate grid buttons here
-        populateButtons();
+            populateButtons();
 //
 //        // Setup User and Minions
             lockButtons();
-            generateImageForMinionButton(0, 2);
-            generateImageForUserButton(0,0);
+        Minion minions[] = new Minion[numOfMinionsLeft];
+
+            player = new Player(mapTracker);
+            mapTracker.assignUser(player.getLocation());
+        for(int i=0; i < numOfMinionsLeft;i++){
+            minions[i] = new Minion(mapTracker);
+            mapTracker.assignMinions(minions[i].getLocation());
+        }
+
+             generateImageForUserButton(mapTracker.getMap());
+            generateImageForMinionButton(mapTracker.getMap());
 //
 //
 //        // Store Games played
@@ -87,8 +106,8 @@ public class GameActivity extends MinionActiviy {
             ));
             table.addView((tableRow));
             for(int j =0; j < NUM_OF_COLS; j++){
-//                 final int x = i;
-//                final int y = j;
+                 final int x = i;
+                final int y = j;
                 Button button = new Button(this);
 
                 button.setLayoutParams(new TableRow.LayoutParams(
@@ -100,10 +119,14 @@ public class GameActivity extends MinionActiviy {
                     @Override
                     public void onClick(View v) {
 
+
+
+                               gridButtonClicked(x,y);
 //                        lockButtons();
-//                        generateImageForButton(x,y);
-                    TextView viewMoves =  (TextView)findViewById(R.id.txt_moves);
-                        viewMoves.setText((String)getResources().getText(R.string.movesMade) + " "+  ++userMoves);
+//                        generateImageForUserButton(x,y);
+                               TextView viewMoves = (TextView) findViewById(R.id.txt_moves);
+                               viewMoves.setText((String) getResources().getText(R.string.movesMade) + " " + ++userMoves);
+
 
                     }
                 });
@@ -115,24 +138,70 @@ public class GameActivity extends MinionActiviy {
     }
 //
 //
-    private void generateImageForMinionButton(int x, int y){
-        Button button  = buttons[x][y];
-        int newHeight = 98;
-        int newWidth= 142;
-        Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.greenmonster);
-        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
-        Resources resource = getResources();
-        button.setBackground(new BitmapDrawable(resource,scaledBitMap));
+
+    private void gridButtonClicked(int x, int y){
+        boolean current = x== mapTracker.getUserX() && y ==mapTracker.getUserY();
+        if(current) {
+            Toast.makeText(this, "Button clicked: " + x + "," + y, Toast.LENGTH_SHORT).show();
+        }
+        boolean goLeft = x == mapTracker.getUserX() && y == (mapTracker.getUserY()-1);
+        boolean goRight = x==mapTracker.getUserX() && y == (mapTracker.getUserY() + 1);
+        boolean goUp  = x == (mapTracker.getUserX() - 1) && y == mapTracker.getUserY();
+        boolean goDown  = x == (mapTracker.getUserX() + 1) && y == mapTracker.getUserY();
+
+        if(goLeft){
+            Toast.makeText(this,"GO LEFT", Toast.LENGTH_SHORT).show();
+        }
+        else if(goRight){
+            Toast.makeText(this,"GO RIGHT", Toast.LENGTH_SHORT).show();
+        }
+        else if(goUp){
+            Toast.makeText(this,"GO UP", Toast.LENGTH_SHORT).show();
+        }
+        else if(goDown){
+            Toast.makeText(this,"GO DOWN", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    private void generateImageForMinionButton(int map[][]){
+        for(int i =0; i < NUM_OF_ROWS; i++){
+            for(int j =0; j < NUM_OF_COLS; j++){
+                if(map[i][j] == 0) {
+                    Button button = buttons[i][j];
+                    int newHeight = 98;
+                    int newWidth = 142;
+                    Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.greenmonster);
+                    Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
+                    Resources resource = getResources();
+                    button.setBackground(new BitmapDrawable(resource, scaledBitMap));
+
+                }
+            }
+        }
+
     }
 //
-    private void generateImageForUserButton(int x, int y){
-        Button button  = buttons[x][y];
-        int newHeight = 98;
-        int newWidth= 142;
-        Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.stickman);
-        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
-        Resources resource = getResources();
-        button.setBackground(new BitmapDrawable(resource,scaledBitMap));
+    private void generateImageForUserButton(int map[][]){
+
+        Button button;
+        for(int i =0; i < NUM_OF_ROWS; i++){
+            for(int j =0;  j< NUM_OF_COLS;j++){
+
+                if(map[i][j] == 1){
+                     button  = buttons[i][j];
+                    int newHeight = 98;
+                    int newWidth= 142;
+                    Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.stickman);
+                    Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
+                    Resources resource = getResources();
+                    button.setBackground(new BitmapDrawable(resource,scaledBitMap));
+                    break;
+                }
+
+            }
+        }
     }
 //
     private void lockButtons() {
