@@ -202,7 +202,11 @@ public class GameActivity extends MinionActiviy {
         }
 
 
-
+        for(int i=0; i < numOfMinionsLeft; i++) {
+            generateImageForDefaultButton(minions[i].getMinionXCoordinate(), minions[i].getMinionYCoordinate());
+            mapTracker.moveMinion(minions[i]);
+            generateImageForMinionButton(minions[i]);
+        }
 
     }
 
@@ -231,6 +235,17 @@ public class GameActivity extends MinionActiviy {
                 }
             }
         }
+
+    }
+
+    private void generateImageForMinionButton(Minion minion){
+        Button button = buttons[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()];
+        int newHeight = 98;
+        int newWidth = 142;
+        Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.greenmonster);
+        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
+        Resources resource = getResources();
+        button.setBackground(new BitmapDrawable(resource, scaledBitMap));
 
     }
 //

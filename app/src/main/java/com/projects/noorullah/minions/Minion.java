@@ -59,4 +59,11 @@ public class Minion {
         return false;
     }
 
+    public void updateLocation(int x, int y){
+        location[getMinionXCoordinate()][getMinionYCoordinate()] = -1;
+        location[x][y] = 0;
+        this.x = x;
+        this.y = y;
+    }
+
 }
