@@ -230,7 +230,7 @@ public class GameActivity extends MinionActiviy {
                 if(m != minions.get(i)){
                     if(minions.get(i).getMinionXCoordinate()==m.getPreviousXCoordinate()
                             && minions.get(i).getMinionYCoordinate()==m.getPreviousYCoordinate()){
-                        generateImageForMinionButton(m,mapTracker.getMap());
+                        generateImageForMinionButton(minions.get(i),mapTracker.getMap());
 
                     }
                 }
