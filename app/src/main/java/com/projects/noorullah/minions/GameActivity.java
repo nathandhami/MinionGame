@@ -25,18 +25,15 @@ public class GameActivity extends MinionActiviy {
 
 
     private Cell mapTracker;
-    Player player;
     private int NUM_OF_ROWS;
 
-    ArrayList<Minion> minions = new ArrayList();
+    private ArrayList<Minion> minions = new ArrayList();
     private int NUM_OF_COLS;
     private int numOfMinionsLeft;
     private Button buttons[][];
     private Button user;
-    Button defaultBackButton;
+    private Button defaultBackButton;
     private int userMoves = 0;
-
-//    private boolean occupied[][];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,62 +56,61 @@ public class GameActivity extends MinionActiviy {
 //
 //
 //        // Dynamically allocate grid buttons here
-            populateButtons();
+        populateButtons();
 //
 //        // Setup User and Minions
-            lockButtons();
-         for(int i =0; i < numOfMinionsLeft; i++){
-             Minion minion = new Minion(mapTracker);
+        lockButtons();
+        for (int i = 0; i < numOfMinionsLeft; i++) {
+            Minion minion = new Minion(mapTracker);
             minions.add(minion);
-         }
-
-            player = new Player(mapTracker);
-            mapTracker.assignUserRandomly();
-        for(int i=0; i < numOfMinionsLeft;i++){
+        }
+        mapTracker.assignUserRandomly();
+        for (int i = 0; i < numOfMinionsLeft; i++) {
             mapTracker.assignMinions(minions.get(i).getLocation());
             minions.get(i).getCoordinates();
         }
 
-             generateImageForUserButton(mapTracker.getMap());
-            generateImageForMinionButton(mapTracker.getMap());
+        generateImageForUserButton(mapTracker.getMap());
+        generateImageForMinionButton(mapTracker.getMap());
 //
 //
 //        // Store Games played
-        SharedPreferences settings = getSharedPreferences(GAME_PREFERENCES,MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(GAME_PREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        int numOfGamesPlayed = settings.getInt("GAMES_PLAYED",0);
+        int numOfGamesPlayed = settings.getInt("GAMES_PLAYED", 0);
         displayGamesPlayed(numOfGamesPlayed);
         numOfGamesPlayed++;
-        editor.putInt("GAMES_PLAYED",numOfGamesPlayed);
+        editor.putInt("GAMES_PLAYED", numOfGamesPlayed);
         editor.commit();
     }
 
     private void displayMinionsRemaining() {
-        String minionRemaining = (String)getResources().getText(R.string.minionsRemain) + " " + numOfMinionsLeft;
+        String minionRemaining = (String) getResources().getText(R.string.minionsRemain) + " " + numOfMinionsLeft;
         TextView textview = (TextView) findViewById(R.id.txt_remain);
         textview.setText(minionRemaining);
     }
 
     private void displayGamesPlayed(int numOfPlayed) {
-        String displayNumOfPlayed = (String)getResources().getText(R.string.gamesplayed) + numOfPlayed;
+        String displayNumOfPlayed = (String) getResources().getText(R.string.gamesplayed) + numOfPlayed;
         TextView textview = (TextView) findViewById(R.id.txt_played);
         textview.setText(displayNumOfPlayed);
     }
-//
-    private void populateButtons(){
 
-        TableLayout table  = (TableLayout) findViewById(R.id.tableForButtons);
+    //
+    private void populateButtons() {
 
-        for(int i =0; i < NUM_OF_ROWS; i++){
-        TableRow tableRow = new TableRow(this);
+        TableLayout table = (TableLayout) findViewById(R.id.tableForButtons);
+
+        for (int i = 0; i < NUM_OF_ROWS; i++) {
+            TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             ));
             table.addView((tableRow));
-            for(int j =0; j < NUM_OF_COLS; j++){
-                 final int x = i;
+            for (int j = 0; j < NUM_OF_COLS; j++) {
+                final int x = i;
                 final int y = j;
                 Button button = new Button(this);
 
@@ -128,13 +124,9 @@ public class GameActivity extends MinionActiviy {
                     @Override
                     public void onClick(View v) {
 
-
-
-                               gridButtonClicked(x,y);
-//                        lockButtons();
-//                        generateImageForUserButton(x,y);
-                               TextView viewMoves = (TextView) findViewById(R.id.txt_moves);
-                               viewMoves.setText((String) getResources().getText(R.string.movesMade) + " " + ++userMoves);
+                        gridButtonClicked(x, y);
+                        TextView viewMoves = (TextView) findViewById(R.id.txt_moves);
+                        viewMoves.setText((String) getResources().getText(R.string.movesMade) + " " + ++userMoves);
 
 
                     }
@@ -150,137 +142,101 @@ public class GameActivity extends MinionActiviy {
 //
 //
 
-    private void gridButtonClicked(int x, int y){
-        boolean current = x== mapTracker.getUserX() && y ==mapTracker.getUserY();
-        if(current) {
-            Toast.makeText(this, "Button clicked: " + x + "," + y, Toast.LENGTH_SHORT).show();
+    private void gridButtonClicked(int x, int y) {
+        boolean current = x == mapTracker.getUserX() && y == mapTracker.getUserY();
+        if (current) {
+            Toast.makeText(this, "CURRENT", Toast.LENGTH_SHORT).show();
         }
-        boolean goLeft = x == mapTracker.getUserX() && y == (mapTracker.getUserY()-1);
-        boolean goRight = x==mapTracker.getUserX() && y == (mapTracker.getUserY() + 1);
-        boolean goUp  = x == (mapTracker.getUserX() - 1) && y == mapTracker.getUserY();
-        boolean goDown  = x == (mapTracker.getUserX() + 1) && y == mapTracker.getUserY();
+        boolean goLeft = x == mapTracker.getUserX() && y == (mapTracker.getUserY() - 1);
+        boolean goRight = x == mapTracker.getUserX() && y == (mapTracker.getUserY() + 1);
+        boolean goUp = x == (mapTracker.getUserX() - 1) && y == mapTracker.getUserY();
+        boolean goDown = x == (mapTracker.getUserX() + 1) && y == mapTracker.getUserY();
 
 
-        if(goLeft){
-            displayDialog(x, y);
-            Toast.makeText(this,"GO LEFT", Toast.LENGTH_SHORT).show();
-            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
-            generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
-            mapTracker.assignUser(x,y);
-            generateImageForUserButton(mapTracker.getMap());
-        }
-        else if(goRight){
-            displayDialog(x, y);
-            Toast.makeText(this,"GO RIGHT", Toast.LENGTH_SHORT).show();
-            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
-            generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
-            mapTracker.assignUser(x,y);
-            generateImageForUserButton(mapTracker.getMap());
-
-//            generateImageForDefaultButton(x,y);
-//            button.setBackground(defaultBackground);
-        }
-        else if(goUp){
-            displayDialog(x, y);
-            Toast.makeText(this,"GO UP", Toast.LENGTH_SHORT).show();
-            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
-            generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
-            mapTracker.assignUser(x,y);
-            generateImageForUserButton(mapTracker.getMap());
-//            button.setBackground(defaultBackground);
-        }
-        else if(goDown){
-            displayDialog(x, y);
-            Toast.makeText(this,"GO DOWN ", Toast.LENGTH_SHORT).show();
+        if (goLeft) {
+            displayDialogLose(x, y);
             mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
             generateImageForDefaultButton(mapTracker.getUserX(), mapTracker.getUserY());
-            mapTracker.assignUser(x,y);
+            mapTracker.assignUser(x, y);
             generateImageForUserButton(mapTracker.getMap());
-//            button.setBackground(defaultBackground);
+        } else if (goRight) {
+            displayDialogLose(x, y);
+            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
+            generateImageForDefaultButton(mapTracker.getUserX(), mapTracker.getUserY());
+            mapTracker.assignUser(x, y);
+            generateImageForUserButton(mapTracker.getMap());
+
+        } else if (goUp) {
+            displayDialogLose(x, y);
+            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
+            generateImageForDefaultButton(mapTracker.getUserX(), mapTracker.getUserY());
+            mapTracker.assignUser(x, y);
+            generateImageForUserButton(mapTracker.getMap());
+        } else if (goDown) {
+            displayDialogLose(x, y);
+            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
+            generateImageForDefaultButton(mapTracker.getUserX(), mapTracker.getUserY());
+            mapTracker.assignUser(x, y);
+            generateImageForUserButton(mapTracker.getMap());
         }
 
 
-
-        for(int i=0; i < numOfMinionsLeft; i++) {
+        for (int i = 0; i < numOfMinionsLeft; i++) {
 
             generateImageForDefaultButton(minions.get(i).getMinionXCoordinate(), minions.get(i).getMinionYCoordinate());
             mapTracker.moveMinion(minions.get(i));
-            generateImageForMinionButton(minions.get(i),mapTracker.getMap());
+            generateImageForMinionButton(minions.get(i), mapTracker.getMap());
 
         }
 
-        for(int i=0; i < numOfMinionsLeft; i++) {
+        for (int i = 0; i < numOfMinionsLeft; i++) {
 
-            for(Minion m : minions){
-                if(m != minions.get(i)){
-                    if(minions.get(i).getMinionXCoordinate()==m.getPreviousXCoordinate()
-                            && minions.get(i).getMinionYCoordinate()==m.getPreviousYCoordinate()){
-                        generateImageForMinionButton(minions.get(i),mapTracker.getMap());
+            for (Minion m : minions) {
+                if (m != minions.get(i)) {
+                    if (minions.get(i).getMinionXCoordinate() == m.getPreviousXCoordinate()
+                            && minions.get(i).getMinionYCoordinate() == m.getPreviousYCoordinate()) {
+                        generateImageForMinionButton(minions.get(i), mapTracker.getMap());
                         break;
 
                     }
                 }
             }
 
-            //generateImageForMinionButton(minions.get(i),mapTracker.getMap());
         }
 
         int location[][] = mapTracker.getMap();
 
 
-//        for(int i =0; i< numOfMinionsLeft; i++){
-//            if(location[minions.get(i).getMinionXCoordinate()][minions.get(i).getMinionYCoordinate()] == 2 &&
-//                    mapTracker.minionExists(minions.get(i).getMinionXCoordinate(),minions.get(i).getMinionYCoordinate())){
-//
-//                generateImageForImmobilzedCell(minions.get(i).getMinionXCoordinate(), minions.get(i).getMinionYCoordinate());
-//                minions.remove(i);
-//                numOfMinionsLeft--;
-//
-//            }
-//        }
-
-
-
         // trap
-            for (int i = 0; i < numOfMinionsLeft; i++) {
+        for (int i = 0; i < numOfMinionsLeft; i++) {
 
-                    if (location[minions.get(i).getMinionXCoordinate()][minions.get(i).getMinionYCoordinate()] ==2) {
-                        Log.i("TAG", "YES MOBILIZED CELL");
-                        minions.remove(i);
-                        numOfMinionsLeft--;
-                        displayMinionsRemaining();
-                    }
-
+            if (location[minions.get(i).getMinionXCoordinate()][minions.get(i).getMinionYCoordinate()] == 2) {
+                minions.remove(i);
+                numOfMinionsLeft--;
+                displayMinionsRemaining();
             }
 
-        for(int i =0; i< NUM_OF_ROWS;i++){
-            for(int j=0; j< NUM_OF_COLS; j++){
-
-                if(location[i][j] ==2)
-                Log.i("CELL","MOBILIZED CELL EXIST!");
-            }
         }
 
 
-        for(int i=0; i < numOfMinionsLeft-1; i++){
+        for (int i = 0; i < numOfMinionsLeft - 1; i++) {
 
-            for(int j=i+1; j<numOfMinionsLeft; j++){
+            for (int j = i + 1; j < numOfMinionsLeft; j++) {
 
-                if(minions.get(i).getMinionXCoordinate() == minions.get(j).getMinionXCoordinate()){
-                    if(minions.get(i).getMinionYCoordinate() == minions.get(j).getMinionYCoordinate()){
-
-
-                        for(int s=0; s < numOfMinionsLeft; s++){
-
-                            if(s!=i && s!=j){
-
-                                if(minions.get(s).getMinionXCoordinate()==minions.get(i).getMinionXCoordinate()){
-                                    if(minions.get(s).getMinionYCoordinate()==minions.get(i).getMinionYCoordinate()){
+                if (minions.get(i).getMinionXCoordinate() == minions.get(j).getMinionXCoordinate()) {
+                    if (minions.get(i).getMinionYCoordinate() == minions.get(j).getMinionYCoordinate()) {
 
 
+                        for (int s = 0; s < numOfMinionsLeft; s++) {
 
-                                        if(i>s) i--;
-                                        if (j>s) j--;
+                            if (s != i && s != j) {
+
+                                if (minions.get(s).getMinionXCoordinate() == minions.get(i).getMinionXCoordinate()) {
+                                    if (minions.get(s).getMinionYCoordinate() == minions.get(i).getMinionYCoordinate()) {
+
+
+                                        if (i > s) i--;
+                                        if (j > s) j--;
 
                                         mapTracker.killingMinions(minions.get(s));
                                         minions.remove(s);
@@ -294,30 +250,36 @@ public class GameActivity extends MinionActiviy {
                         }
                         mapTracker.killingMinions(minions.get(i));
                         mapTracker.killingMinions(minions.get(j));
-                        Toast.makeText(this,"Minions Immobilised!", Toast.LENGTH_SHORT).show();
                         generateImageForImmobilzedCell(minions.get(i).getMinionXCoordinate(), minions.get(i).getMinionYCoordinate());
                         minions.remove(i);
-                        if(j>i) j--;
+                        if (j > i) j--;
                         minions.remove(j);
                         numOfMinionsLeft -= 2;
                         displayMinionsRemaining();
-
-
                         break;
-
                     }
                 }
             }
         }
 
-        for(int i=0; i< numOfMinionsLeft; i++){
-            Log.i("TAG",i+1 + ":" + minions.get(i).getMinionXCoordinate() + "," + minions.get(i).getMinionYCoordinate());
+        for (int i = 0; i < numOfMinionsLeft; i++) {
+            Log.i("TAG", i + 1 + ":" + minions.get(i).getMinionXCoordinate() + "," + minions.get(i).getMinionYCoordinate());
+        }
+
+        if (numOfMinionsLeft <= 0) {
+            displayDialogWin();
+        }
+
+        int updateLocation[][] = mapTracker.getMap();
+
+        if(updateLocation[mapTracker.getUserX()][mapTracker.getUserY()] == 0 || updateLocation[mapTracker.getUserX()][mapTracker.getUserY()] == 2){
+            displayDialogLose(x,y);
         }
 
     }
 
-    private void displayDialog(int x, int y) {
-        if(mapTracker.minionExists(x,y) || mapTracker.immobilzedCellExists(x, y)){
+    private void displayDialogLose(int x, int y) {
+        if (mapTracker.minionExists(x, y) || mapTracker.immobilzedCellExists(x, y)) {
             Toast.makeText(this, "GAME OVER", Toast.LENGTH_SHORT).show();
             Dialog dialog = new Dialog(this);
             dialog.setTitle("GAME OVER");
@@ -325,11 +287,20 @@ public class GameActivity extends MinionActiviy {
             tv.setText("You lost!");
             dialog.setContentView(tv);
             dialog.show();
-
         }
     }
 
-    private void generateImageForImmobilzedCell(int x, int y){
+    private void displayDialogWin() {
+        Toast.makeText(this, "GAME WON", Toast.LENGTH_SHORT).show();
+        Dialog dialog = new Dialog(this);
+        dialog.setTitle("GAME WON");
+        TextView tv = new TextView(this);
+        tv.setText("You win!");
+        dialog.setContentView(tv);
+        dialog.show();
+    }
+
+    private void generateImageForImmobilzedCell(int x, int y) {
         Button button = buttons[x][y];
         int newHeight = 98;
         int newWidth = 142;
@@ -340,24 +311,19 @@ public class GameActivity extends MinionActiviy {
     }
 
 
-    private void generateImageForDefaultButton(int x, int y){
+    private void generateImageForDefaultButton(int x, int y) {
 
-            Button button = buttons[x][y];
+        Button button = buttons[x][y];
         Button defaultButton = new Button(this);
-//            int newHeight = 98;
-//            int newWidth = 142;
-//            Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.btn_default_normal);
-//            Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
-//            Resources resource = getResources();
-            button.setBackground(defaultButton.getBackground());
+        button.setBackground(defaultButton.getBackground());
 
 
     }
 
-    private void generateImageForMinionButton(int map[][]){
-        for(int i =0; i < NUM_OF_ROWS; i++){
-            for(int j =0; j < NUM_OF_COLS; j++){
-                if(map[i][j] == 0) {
+    private void generateImageForMinionButton(int map[][]) {
+        for (int i = 0; i < NUM_OF_ROWS; i++) {
+            for (int j = 0; j < NUM_OF_COLS; j++) {
+                if (map[i][j] == 0) {
                     Button button = buttons[i][j];
                     int newHeight = 98;
                     int newWidth = 142;
@@ -371,8 +337,8 @@ public class GameActivity extends MinionActiviy {
 
     }
 
-    private void generateImageForMinionButton(Minion minion, int map[][]){
-        if(map[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()] == 0){
+    private void generateImageForMinionButton(Minion minion, int map[][]) {
+        if (map[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()] == 0) {
             Button button = buttons[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()];
             int newHeight = 98;
             int newWidth = 142;
@@ -385,52 +351,36 @@ public class GameActivity extends MinionActiviy {
 
     }
 
-//    public void deleteMinion(int del){
-//
-//        Log.i("TAG","Removed:" + ":" + minions.get(del).getMinionXCoordinate() + "," + minions.get(del).getMinionYCoordinate());
-//        for(int i=0; i<numOfMinionsLeft; i++){
-//
-//            if(i == del){
-//                minions.remove(i);
-//                numOfMinionsLeft--;
-//                break;
-//            }
-//
-//        }
-//
-//
-//        displayMinionsRemaining();
-//    }
-//
-    private void generateImageForUserButton(int map[][]){
+    private void generateImageForUserButton(int map[][]) {
 
         Button button;
-        for(int i =0; i < NUM_OF_ROWS; i++){
-            for(int j =0;  j< NUM_OF_COLS;j++){
+        for (int i = 0; i < NUM_OF_ROWS; i++) {
+            for (int j = 0; j < NUM_OF_COLS; j++) {
 
-                if(map[i][j] == 1){
-                     button  = buttons[i][j];
+                if (map[i][j] == 1) {
+                    button = buttons[i][j];
                     int newHeight = 98;
-                    int newWidth= 142;
-                    Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.stickman);
+                    int newWidth = 142;
+                    Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.stickman);
                     Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
                     Resources resource = getResources();
-                    button.setBackground(new BitmapDrawable(resource,scaledBitMap));
+                    button.setBackground(new BitmapDrawable(resource, scaledBitMap));
                     break;
                 }
 
             }
         }
     }
-//
+
+    //
     private void lockButtons() {
-        for(int i =0; i < NUM_OF_ROWS; i++){
-            for(int j =0; j < NUM_OF_COLS; j++){
+        for (int i = 0; i < NUM_OF_ROWS; i++) {
+            for (int j = 0; j < NUM_OF_COLS; j++) {
                 Button button = buttons[i][j];
-                int width= button.getWidth();
+                int width = button.getWidth();
                 button.setMinWidth(width);
                 button.setMaxWidth(width);
-                int height= button.getHeight();
+                int height = button.getHeight();
                 button.setMinHeight(height);
                 button.setMaxHeight(height);
             }
