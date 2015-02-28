@@ -240,6 +240,43 @@ public class GameActivity extends MinionActiviy {
             //generateImageForMinionButton(minions.get(i),mapTracker.getMap());
         }
 
+        int location[][] = mapTracker.getMap();
+
+
+//        for(int i =0; i< numOfMinionsLeft; i++){
+//            if(location[minions.get(i).getMinionXCoordinate()][minions.get(i).getMinionYCoordinate()] == 2 &&
+//                    mapTracker.minionExists(minions.get(i).getMinionXCoordinate(),minions.get(i).getMinionYCoordinate())){
+//
+//                generateImageForImmobilzedCell(minions.get(i).getMinionXCoordinate(), minions.get(i).getMinionYCoordinate());
+//                minions.remove(i);
+//                numOfMinionsLeft--;
+//
+//            }
+//        }
+
+
+
+        // trap
+            for (int i = 0; i < numOfMinionsLeft; i++) {
+
+                    if (location[minions.get(i).getMinionXCoordinate()][minions.get(i).getMinionYCoordinate()] ==2) {
+                        Log.i("TAG", "YES MOBILIZED CELL");
+                        minions.remove(i);
+                        numOfMinionsLeft--;
+                        displayMinionsRemaining();
+                    }
+
+            }
+
+        for(int i =0; i< NUM_OF_ROWS;i++){
+            for(int j=0; j< NUM_OF_COLS; j++){
+
+                if(location[i][j] ==2)
+                Log.i("CELL","MOBILIZED CELL EXIST!");
+            }
+        }
+
+
         for(int i=0; i < numOfMinionsLeft-1; i++){
 
             for(int j=i+1; j<numOfMinionsLeft; j++){
@@ -308,12 +345,13 @@ public class GameActivity extends MinionActiviy {
     private void generateImageForDefaultButton(int x, int y){
 
             Button button = buttons[x][y];
-            int newHeight = 98;
-            int newWidth = 142;
-            Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.btn_default_normal);
-            Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
-            Resources resource = getResources();
-            button.setBackground(new BitmapDrawable(resource, scaledBitMap));
+        Button defaultButton = new Button(this);
+//            int newHeight = 98;
+//            int newWidth = 142;
+//            Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.btn_default_normal);
+//            Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
+//            Resources resource = getResources();
+            button.setBackground(defaultButton.getBackground());
 
 
     }

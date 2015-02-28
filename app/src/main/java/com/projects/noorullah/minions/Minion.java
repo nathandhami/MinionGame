@@ -83,7 +83,7 @@ public class Minion {
 
     public void ImmobilizeMinions(int x, int y){
 
-        location[x][y] = -1;
+        location[x][y] = 2;
 
     }
 

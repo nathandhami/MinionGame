@@ -144,6 +144,8 @@ public class Cell extends MinionActiviy{
 
         map[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()] = -1;
         minion.updateLocation(minionX,minionY);
+        if(map[minionX][minionY]==2);
+        else
         map[minionX][minionY] = 0;
 
     }
@@ -154,7 +156,7 @@ public class Cell extends MinionActiviy{
         int firstY = first.getMinionYCoordinate();
 
         first.ImmobilizeMinions(firstX,firstY);
-        map[firstX][firstY] = -1;
+        map[firstX][firstY] = 2;
 
     }
 
@@ -166,6 +168,15 @@ public class Cell extends MinionActiviy{
         }
         return false;
     }
+
+    public boolean immobilzedCell(int x, int y){
+        if(map[x][y] == 2){
+            return true;
+        }
+        return false;
+    }
+
+
 
     public boolean playerExists(int x, int y){
         if(map[x][y] == 1){
