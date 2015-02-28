@@ -325,6 +325,7 @@ public class GameActivity extends MinionActiviy {
             tv.setText("You lost!");
             dialog.setContentView(tv);
             dialog.show();
+
         }
     }
 
