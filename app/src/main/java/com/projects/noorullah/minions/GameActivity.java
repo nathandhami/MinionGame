@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -163,9 +162,7 @@ public class GameActivity extends MinionActiviy {
 
 
         if(goLeft){
-//            if(mapTracker.minionExists(x,y)){
-//                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
-//            }
+            displayDialog(x, y);
             Toast.makeText(this,"GO LEFT", Toast.LENGTH_SHORT).show();
             mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
             generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
@@ -173,9 +170,7 @@ public class GameActivity extends MinionActiviy {
             generateImageForUserButton(mapTracker.getMap());
         }
         else if(goRight){
-//            if(mapTracker.minionExists(x,y)){
-//                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
-//            }
+            displayDialog(x, y);
             Toast.makeText(this,"GO RIGHT", Toast.LENGTH_SHORT).show();
             mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
             generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
@@ -186,15 +181,7 @@ public class GameActivity extends MinionActiviy {
 //            button.setBackground(defaultBackground);
         }
         else if(goUp){
-//            if(mapTracker.minionExists(x,y)){
-//                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
-//                Dialog dialog = new Dialog(this);
-//                dialog.setTitle("GAME OVER");
-//                TextView tv = new TextView(this);
-//                tv.setText("You lost!");
-//                dialog.setContentView(tv);
-//                dialog.show();
-//            }
+            displayDialog(x, y);
             Toast.makeText(this,"GO UP", Toast.LENGTH_SHORT).show();
             mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
             generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
@@ -203,9 +190,7 @@ public class GameActivity extends MinionActiviy {
 //            button.setBackground(defaultBackground);
         }
         else if(goDown){
-//            if(mapTracker.minionExists(x,y)){
-//                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
-//            }
+            displayDialog(x, y);
             Toast.makeText(this,"GO DOWN ", Toast.LENGTH_SHORT).show();
             mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
             generateImageForDefaultButton(mapTracker.getUserX(), mapTracker.getUserY());
@@ -329,6 +314,18 @@ public class GameActivity extends MinionActiviy {
             Log.i("TAG",i+1 + ":" + minions.get(i).getMinionXCoordinate() + "," + minions.get(i).getMinionYCoordinate());
         }
 
+    }
+
+    private void displayDialog(int x, int y) {
+        if(mapTracker.minionExists(x,y) || mapTracker.immobilzedCellExists(x, y)){
+            Toast.makeText(this, "GAME OVER", Toast.LENGTH_SHORT).show();
+            Dialog dialog = new Dialog(this);
+            dialog.setTitle("GAME OVER");
+            TextView tv = new TextView(this);
+            tv.setText("You lost!");
+            dialog.setContentView(tv);
+            dialog.show();
+        }
     }
 
     private void generateImageForImmobilzedCell(int x, int y){

@@ -169,7 +169,7 @@ public class Cell extends MinionActiviy{
         return false;
     }
 
-    public boolean immobilzedCell(int x, int y){
+    public boolean immobilzedCellExists(int x, int y){
         if(map[x][y] == 2){
             return true;
         }
