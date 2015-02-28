@@ -142,9 +142,8 @@ public class Cell extends MinionActiviy{
                 }
             }
 
-
-        minion.updateLocation(minionX,minionY);
         map[minion.getMinionXCoordinate()][minion.getMinionYCoordinate()] = -1;
+        minion.updateLocation(minionX,minionY);
         map[minionX][minionY] = 0;
 
     }
