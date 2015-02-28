@@ -231,6 +231,7 @@ public class GameActivity extends MinionActiviy {
                     if(minions.get(i).getMinionXCoordinate()==m.getPreviousXCoordinate()
                             && minions.get(i).getMinionYCoordinate()==m.getPreviousYCoordinate()){
                         generateImageForMinionButton(minions.get(i),mapTracker.getMap());
+                        break;
 
                     }
                 }
