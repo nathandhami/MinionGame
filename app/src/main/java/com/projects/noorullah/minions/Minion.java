@@ -10,6 +10,8 @@ public class Minion {
     private int numOfColumns;
     private int x;
     private int y;
+    private int previousX;
+    private int previousY;
 
     public Minion(Cell mapTracker){
          numOfRows = mapTracker.getNumOfRows();
@@ -36,6 +38,8 @@ public class Minion {
                 if(location[i][j] == 0){
                     x = i;
                     y = j;
+                    previousX=i;
+                    previousY=j;
                 }
             }
         }
@@ -47,6 +51,14 @@ public class Minion {
 
     public int getMinionYCoordinate(){
         return y;
+    }
+
+    public int getPreviousXCoordinate(){
+        return previousX;
+    }
+
+    public int getPreviousYCoordinate(){
+        return previousY;
     }
     // 0 for minion
     // 1 for user
@@ -61,9 +73,12 @@ public class Minion {
 
     public void updateLocation(int x, int y){
         location[getMinionXCoordinate()][getMinionYCoordinate()] = -1;
+        this.previousX=getMinionXCoordinate();
+        this.previousY=getMinionYCoordinate();
         location[x][y] = 0;
         this.x = x;
         this.y = y;
+
     }
 
     public void ImmobilizeMinions(int x, int y){

@@ -36,6 +36,7 @@ public class GameActivity extends MinionActiviy {
     private Button user;
     Button defaultBackButton;
     private int userMoves = 0;
+
 //    private boolean occupied[][];
 
     @Override
@@ -166,6 +167,7 @@ public class GameActivity extends MinionActiviy {
 //                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
 //            }
             Toast.makeText(this,"GO LEFT", Toast.LENGTH_SHORT).show();
+            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
             generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
             mapTracker.assignUser(x,y);
             generateImageForUserButton(mapTracker.getMap());
@@ -175,6 +177,7 @@ public class GameActivity extends MinionActiviy {
 //                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
 //            }
             Toast.makeText(this,"GO RIGHT", Toast.LENGTH_SHORT).show();
+            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
             generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
             mapTracker.assignUser(x,y);
             generateImageForUserButton(mapTracker.getMap());
@@ -193,6 +196,7 @@ public class GameActivity extends MinionActiviy {
 //                dialog.show();
 //            }
             Toast.makeText(this,"GO UP", Toast.LENGTH_SHORT).show();
+            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
             generateImageForDefaultButton(mapTracker.getUserX(),mapTracker.getUserY());
             mapTracker.assignUser(x,y);
             generateImageForUserButton(mapTracker.getMap());
@@ -203,6 +207,7 @@ public class GameActivity extends MinionActiviy {
 //                Toast.makeText(this,"GAME OVER", Toast.LENGTH_SHORT).show();
 //            }
             Toast.makeText(this,"GO DOWN ", Toast.LENGTH_SHORT).show();
+            mapTracker.map[mapTracker.getUserX()][mapTracker.getUserY()] = -1;
             generateImageForDefaultButton(mapTracker.getUserX(), mapTracker.getUserY());
             mapTracker.assignUser(x,y);
             generateImageForUserButton(mapTracker.getMap());
@@ -210,10 +215,28 @@ public class GameActivity extends MinionActiviy {
         }
 
 
+
         for(int i=0; i < numOfMinionsLeft; i++) {
+
             generateImageForDefaultButton(minions.get(i).getMinionXCoordinate(), minions.get(i).getMinionYCoordinate());
             mapTracker.moveMinion(minions.get(i));
             generateImageForMinionButton(minions.get(i),mapTracker.getMap());
+
+        }
+
+        for(int i=0; i < numOfMinionsLeft; i++) {
+
+            for(Minion m : minions){
+                if(m != minions.get(i)){
+                    if(minions.get(i).getMinionXCoordinate()==m.getPreviousXCoordinate()
+                            && minions.get(i).getMinionYCoordinate()==m.getPreviousYCoordinate()){
+                        generateImageForMinionButton(m,mapTracker.getMap());
+
+                    }
+                }
+            }
+
+            //generateImageForMinionButton(minions.get(i),mapTracker.getMap());
         }
 
         for(int i=0; i < numOfMinionsLeft-1; i++){
@@ -222,11 +245,42 @@ public class GameActivity extends MinionActiviy {
 
                 if(minions.get(i).getMinionXCoordinate() == minions.get(j).getMinionXCoordinate()){
                     if(minions.get(i).getMinionYCoordinate() == minions.get(j).getMinionYCoordinate()){
-                        mapTracker.killingMinions(minions.get(i),minions.get(j));
+
+
+                        for(int s=0; s < numOfMinionsLeft; s++){
+
+                            if(s!=i && s!=j){
+
+                                if(minions.get(s).getMinionXCoordinate()==minions.get(i).getMinionXCoordinate()){
+                                    if(minions.get(s).getMinionYCoordinate()==minions.get(i).getMinionYCoordinate()){
+
+
+
+                                        if(i>s) i--;
+                                        if (j>s) j--;
+
+                                        mapTracker.killingMinions(minions.get(s));
+                                        minions.remove(s);
+                                        s--;
+                                        numOfMinionsLeft--;
+
+                                    }
+                                }
+                            }
+
+                        }
+                        mapTracker.killingMinions(minions.get(i));
+                        mapTracker.killingMinions(minions.get(j));
                         Toast.makeText(this,"Minions Immobilised!", Toast.LENGTH_SHORT).show();
                         generateImageForImmobilzedCell(minions.get(i).getMinionXCoordinate(), minions.get(i).getMinionYCoordinate());
-//                        deleteMinion(i);
-//                        deleteMinion(j);
+                        minions.remove(i);
+                        if(j>i) j--;
+                        minions.remove(j);
+                        numOfMinionsLeft -= 2;
+                        displayMinionsRemaining();
+
+
+                        break;
 
                     }
                 }
@@ -251,13 +305,16 @@ public class GameActivity extends MinionActiviy {
 
 
     private void generateImageForDefaultButton(int x, int y){
-        Button button = buttons[x][y];
-        int newHeight = 98;
-        int newWidth = 142;
-        Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.btn_default_normal);
-        Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
-        Resources resource = getResources();
-        button.setBackground(new BitmapDrawable(resource, scaledBitMap));
+
+            Button button = buttons[x][y];
+            int newHeight = 98;
+            int newWidth = 142;
+            Bitmap originalBitMap = BitmapFactory.decodeResource(getResources(),R.drawable.btn_default_normal);
+            Bitmap scaledBitMap = Bitmap.createScaledBitmap(originalBitMap, newWidth, newHeight, true);
+            Resources resource = getResources();
+            button.setBackground(new BitmapDrawable(resource, scaledBitMap));
+
+
     }
 
     private void generateImageForMinionButton(int map[][]){
